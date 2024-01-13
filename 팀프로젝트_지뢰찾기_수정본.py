@@ -7,13 +7,53 @@
 from tkinter import *
 import random
 
-# 게임 세팅 변수들 (네모칸 x길이, y길이, 지뢰 개수)
-SIZE_X = 10
-SIZE_Y = 10
-MINES = 10
+# 루트 윈도우 (Tk 창) 생성
+window0 = Tk()
+window0.geometry("300x200")
+
+def validate():
+    try:
+        size_x = int(entry_x.get())
+        size_y = int(entry_y.get())
+        mines = int(entry_mines.get())
+        if size_x * size_y <= mines or size_x < 1  or size_y < 1 or mines < 1 :
+            print("잘못된 값입니다. 다시 입력해주세요.")
+        else:
+            global SIZE_X, SIZE_Y, MINES
+            SIZE_X = size_x
+            SIZE_Y = size_y
+            MINES = mines
+            window0.destroy()  # 창을 완전히 닫습니다.
+    except ValueError:
+        print("잘못된 값입니다. 다시 입력해주세요.")
+
+label_x = Label(window0, text="가로 길이: ")
+label_x.pack()
+entry_x = Entry(window0)
+entry_x.pack()
+
+label_y = Label(window0, text="세로 길이: ")
+label_y.pack()
+entry_y = Entry(window0)
+entry_y.pack()
+
+label_mines = Label(window0, text="지뢰 개수: ")
+label_mines.pack()
+entry_mines = Entry(window0)
+entry_mines.pack()
+
+submit_button = Button(window0, text="확인", command=validate)
+submit_button.pack()
+
+window0.mainloop()
 
 # 루트 윈도우 (Tk 창) 생성
 window = Tk()
+
+# 게임 세팅 변수들 (네모칸 x길이, y길이, 지뢰 개수)
+SIZE_X = SIZE_X
+SIZE_Y = SIZE_Y
+MINES = MINES
 
 # 지뢰찾기 클래스
 class Minesweeper:
